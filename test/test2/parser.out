@@ -1,0 +1,208 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    LPAREN
+    RPAREN
+
+Grammar
+
+Rule 0     S' -> expressions
+Rule 1     expressions -> expression
+Rule 2     expressions -> expressions expression
+Rule 3     statement -> FUNCTION NAME LBRACKET expression RBRACKET
+Rule 4     statement -> FUNCTION NAME LBRACKET RBRACKET
+Rule 5     statement -> FUNCTION NAME LBRACKET expressions RBRACKET
+Rule 6     statement -> NAME EQUALS expressions
+Rule 7     statement -> expression
+Rule 8     expression -> LBRACKET RBRACKET
+Rule 9     expression -> LBRACKET expression RBRACKET
+Rule 10    expression -> LBRACKET expressions RBRACKET
+Rule 11    expression -> NUMBER
+Rule 12    expression -> NAME
+
+Terminals, with rules where they appear
+
+EQUALS               : 6
+FUNCTION             : 3 4 5
+LBRACKET             : 3 4 5 8 9 10
+LPAREN               : 
+NAME                 : 3 4 5 6 12
+NUMBER               : 11
+RBRACKET             : 3 4 5 8 9 10
+RPAREN               : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 1 2 3 7 9
+expressions          : 2 5 6 10 0
+statement            : 
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expressions
+    (1) expressions -> . expression
+    (2) expressions -> . expressions expression
+    (8) expression -> . LBRACKET RBRACKET
+    (9) expression -> . LBRACKET expression RBRACKET
+    (10) expression -> . LBRACKET expressions RBRACKET
+    (11) expression -> . NUMBER
+    (12) expression -> . NAME
+
+    LBRACKET        shift and go to state 3
+    NUMBER          shift and go to state 4
+    NAME            shift and go to state 5
+
+    expressions                    shift and go to state 1
+    expression                     shift and go to state 2
+
+state 1
+
+    (0) S' -> expressions .
+    (2) expressions -> expressions . expression
+    (8) expression -> . LBRACKET RBRACKET
+    (9) expression -> . LBRACKET expression RBRACKET
+    (10) expression -> . LBRACKET expressions RBRACKET
+    (11) expression -> . NUMBER
+    (12) expression -> . NAME
+
+    LBRACKET        shift and go to state 3
+    NUMBER          shift and go to state 4
+    NAME            shift and go to state 5
+
+    expression                     shift and go to state 6
+
+state 2
+
+    (1) expressions -> expression .
+
+    LBRACKET        reduce using rule 1 (expressions -> expression .)
+    NUMBER          reduce using rule 1 (expressions -> expression .)
+    NAME            reduce using rule 1 (expressions -> expression .)
+    $end            reduce using rule 1 (expressions -> expression .)
+
+
+state 3
+
+    (8) expression -> LBRACKET . RBRACKET
+    (9) expression -> LBRACKET . expression RBRACKET
+    (10) expression -> LBRACKET . expressions RBRACKET
+    (8) expression -> . LBRACKET RBRACKET
+    (9) expression -> . LBRACKET expression RBRACKET
+    (10) expression -> . LBRACKET expressions RBRACKET
+    (11) expression -> . NUMBER
+    (12) expression -> . NAME
+    (1) expressions -> . expression
+    (2) expressions -> . expressions expression
+
+    RBRACKET        shift and go to state 7
+    LBRACKET        shift and go to state 3
+    NUMBER          shift and go to state 4
+    NAME            shift and go to state 5
+
+    expression                     shift and go to state 8
+    expressions                    shift and go to state 9
+
+state 4
+
+    (11) expression -> NUMBER .
+
+    LBRACKET        reduce using rule 11 (expression -> NUMBER .)
+    NUMBER          reduce using rule 11 (expression -> NUMBER .)
+    NAME            reduce using rule 11 (expression -> NUMBER .)
+    $end            reduce using rule 11 (expression -> NUMBER .)
+    RBRACKET        reduce using rule 11 (expression -> NUMBER .)
+
+
+state 5
+
+    (12) expression -> NAME .
+
+    LBRACKET        reduce using rule 12 (expression -> NAME .)
+    NUMBER          reduce using rule 12 (expression -> NAME .)
+    NAME            reduce using rule 12 (expression -> NAME .)
+    $end            reduce using rule 12 (expression -> NAME .)
+    RBRACKET        reduce using rule 12 (expression -> NAME .)
+
+
+state 6
+
+    (2) expressions -> expressions expression .
+
+    LBRACKET        reduce using rule 2 (expressions -> expressions expression .)
+    NUMBER          reduce using rule 2 (expressions -> expressions expression .)
+    NAME            reduce using rule 2 (expressions -> expressions expression .)
+    $end            reduce using rule 2 (expressions -> expressions expression .)
+    RBRACKET        reduce using rule 2 (expressions -> expressions expression .)
+
+
+state 7
+
+    (8) expression -> LBRACKET RBRACKET .
+
+    LBRACKET        reduce using rule 8 (expression -> LBRACKET RBRACKET .)
+    NUMBER          reduce using rule 8 (expression -> LBRACKET RBRACKET .)
+    NAME            reduce using rule 8 (expression -> LBRACKET RBRACKET .)
+    $end            reduce using rule 8 (expression -> LBRACKET RBRACKET .)
+    RBRACKET        reduce using rule 8 (expression -> LBRACKET RBRACKET .)
+
+
+state 8
+
+    (9) expression -> LBRACKET expression . RBRACKET
+    (1) expressions -> expression .
+
+  ! shift/reduce conflict for RBRACKET resolved as shift
+    RBRACKET        shift and go to state 10
+    LBRACKET        reduce using rule 1 (expressions -> expression .)
+    NUMBER          reduce using rule 1 (expressions -> expression .)
+    NAME            reduce using rule 1 (expressions -> expression .)
+
+  ! RBRACKET        [ reduce using rule 1 (expressions -> expression .) ]
+
+
+state 9
+
+    (10) expression -> LBRACKET expressions . RBRACKET
+    (2) expressions -> expressions . expression
+    (8) expression -> . LBRACKET RBRACKET
+    (9) expression -> . LBRACKET expression RBRACKET
+    (10) expression -> . LBRACKET expressions RBRACKET
+    (11) expression -> . NUMBER
+    (12) expression -> . NAME
+
+    RBRACKET        shift and go to state 11
+    LBRACKET        shift and go to state 3
+    NUMBER          shift and go to state 4
+    NAME            shift and go to state 5
+
+    expression                     shift and go to state 6
+
+state 10
+
+    (9) expression -> LBRACKET expression RBRACKET .
+
+    LBRACKET        reduce using rule 9 (expression -> LBRACKET expression RBRACKET .)
+    NUMBER          reduce using rule 9 (expression -> LBRACKET expression RBRACKET .)
+    NAME            reduce using rule 9 (expression -> LBRACKET expression RBRACKET .)
+    $end            reduce using rule 9 (expression -> LBRACKET expression RBRACKET .)
+    RBRACKET        reduce using rule 9 (expression -> LBRACKET expression RBRACKET .)
+
+
+state 11
+
+    (10) expression -> LBRACKET expressions RBRACKET .
+
+    LBRACKET        reduce using rule 10 (expression -> LBRACKET expressions RBRACKET .)
+    NUMBER          reduce using rule 10 (expression -> LBRACKET expressions RBRACKET .)
+    NAME            reduce using rule 10 (expression -> LBRACKET expressions RBRACKET .)
+    $end            reduce using rule 10 (expression -> LBRACKET expressions RBRACKET .)
+    RBRACKET        reduce using rule 10 (expression -> LBRACKET expressions RBRACKET .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for RBRACKET in state 8 resolved as shift

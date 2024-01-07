@@ -1,0 +1,233 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    COLON
+    COMMA
+    DIVIDE
+    LPAREN
+    MINUS
+    NEWLINE
+    NUMBER
+    PLUS
+    RPAREN
+    STRING
+    TIMES
+
+Grammar
+
+Rule 0     S' -> statement
+Rule 1     statement -> PRT MEMPOS
+Rule 2     empty -> <empty>
+Rule 3     statements -> statements statement
+Rule 4     statements -> statement
+Rule 5     statements -> empty
+Rule 6     code_block -> LBRACKET statements RBRACKET
+Rule 7     code_block -> LBRACKET empty RBRACKET
+Rule 8     code_block -> LBRACKET RBRACKET
+Rule 9     statement -> FUNCTION ID LBRACKET code_block RBRACKET
+
+Terminals, with rules where they appear
+
+COLON                : 
+COMMA                : 
+DIVIDE               : 
+FUNCTION             : 9
+ID                   : 9
+LBRACKET             : 6 7 8 9
+LPAREN               : 
+MEMPOS               : 1
+MINUS                : 
+NEWLINE              : 
+NUMBER               : 
+PLUS                 : 
+PRT                  : 1
+RBRACKET             : 6 7 8 9
+RPAREN               : 
+STRING               : 
+TIMES                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+code_block           : 9
+empty                : 5 7
+statement            : 3 4 0
+statements           : 3 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . PRT MEMPOS
+    (9) statement -> . FUNCTION ID LBRACKET code_block RBRACKET
+
+    PRT             shift and go to state 2
+    FUNCTION        shift and go to state 3
+
+    statement                      shift and go to state 1
+
+state 1
+
+    (0) S' -> statement .
+
+
+
+state 2
+
+    (1) statement -> PRT . MEMPOS
+
+    MEMPOS          shift and go to state 4
+
+
+state 3
+
+    (9) statement -> FUNCTION . ID LBRACKET code_block RBRACKET
+
+    ID              shift and go to state 5
+
+
+state 4
+
+    (1) statement -> PRT MEMPOS .
+
+    $end            reduce using rule 1 (statement -> PRT MEMPOS .)
+    RBRACKET        reduce using rule 1 (statement -> PRT MEMPOS .)
+    PRT             reduce using rule 1 (statement -> PRT MEMPOS .)
+    FUNCTION        reduce using rule 1 (statement -> PRT MEMPOS .)
+
+
+state 5
+
+    (9) statement -> FUNCTION ID . LBRACKET code_block RBRACKET
+
+    LBRACKET        shift and go to state 6
+
+
+state 6
+
+    (9) statement -> FUNCTION ID LBRACKET . code_block RBRACKET
+    (6) code_block -> . LBRACKET statements RBRACKET
+    (7) code_block -> . LBRACKET empty RBRACKET
+    (8) code_block -> . LBRACKET RBRACKET
+
+    LBRACKET        shift and go to state 7
+
+    code_block                     shift and go to state 8
+
+state 7
+
+    (6) code_block -> LBRACKET . statements RBRACKET
+    (7) code_block -> LBRACKET . empty RBRACKET
+    (8) code_block -> LBRACKET . RBRACKET
+    (3) statements -> . statements statement
+    (4) statements -> . statement
+    (5) statements -> . empty
+    (2) empty -> .
+    (1) statement -> . PRT MEMPOS
+    (9) statement -> . FUNCTION ID LBRACKET code_block RBRACKET
+
+  ! shift/reduce conflict for RBRACKET resolved as shift
+  ! shift/reduce conflict for PRT resolved as shift
+  ! shift/reduce conflict for FUNCTION resolved as shift
+    RBRACKET        shift and go to state 10
+    PRT             shift and go to state 2
+    FUNCTION        shift and go to state 3
+
+  ! RBRACKET        [ reduce using rule 2 (empty -> .) ]
+  ! PRT             [ reduce using rule 2 (empty -> .) ]
+  ! FUNCTION        [ reduce using rule 2 (empty -> .) ]
+
+    statements                     shift and go to state 9
+    empty                          shift and go to state 11
+    statement                      shift and go to state 12
+
+state 8
+
+    (9) statement -> FUNCTION ID LBRACKET code_block . RBRACKET
+
+    RBRACKET        shift and go to state 13
+
+
+state 9
+
+    (6) code_block -> LBRACKET statements . RBRACKET
+    (3) statements -> statements . statement
+    (1) statement -> . PRT MEMPOS
+    (9) statement -> . FUNCTION ID LBRACKET code_block RBRACKET
+
+    RBRACKET        shift and go to state 14
+    PRT             shift and go to state 2
+    FUNCTION        shift and go to state 3
+
+    statement                      shift and go to state 15
+
+state 10
+
+    (8) code_block -> LBRACKET RBRACKET .
+
+    RBRACKET        reduce using rule 8 (code_block -> LBRACKET RBRACKET .)
+
+
+state 11
+
+    (7) code_block -> LBRACKET empty . RBRACKET
+    (5) statements -> empty .
+
+  ! shift/reduce conflict for RBRACKET resolved as shift
+    RBRACKET        shift and go to state 16
+    PRT             reduce using rule 5 (statements -> empty .)
+    FUNCTION        reduce using rule 5 (statements -> empty .)
+
+  ! RBRACKET        [ reduce using rule 5 (statements -> empty .) ]
+
+
+state 12
+
+    (4) statements -> statement .
+
+    RBRACKET        reduce using rule 4 (statements -> statement .)
+    PRT             reduce using rule 4 (statements -> statement .)
+    FUNCTION        reduce using rule 4 (statements -> statement .)
+
+
+state 13
+
+    (9) statement -> FUNCTION ID LBRACKET code_block RBRACKET .
+
+    $end            reduce using rule 9 (statement -> FUNCTION ID LBRACKET code_block RBRACKET .)
+    RBRACKET        reduce using rule 9 (statement -> FUNCTION ID LBRACKET code_block RBRACKET .)
+    PRT             reduce using rule 9 (statement -> FUNCTION ID LBRACKET code_block RBRACKET .)
+    FUNCTION        reduce using rule 9 (statement -> FUNCTION ID LBRACKET code_block RBRACKET .)
+
+
+state 14
+
+    (6) code_block -> LBRACKET statements RBRACKET .
+
+    RBRACKET        reduce using rule 6 (code_block -> LBRACKET statements RBRACKET .)
+
+
+state 15
+
+    (3) statements -> statements statement .
+
+    RBRACKET        reduce using rule 3 (statements -> statements statement .)
+    PRT             reduce using rule 3 (statements -> statements statement .)
+    FUNCTION        reduce using rule 3 (statements -> statements statement .)
+
+
+state 16
+
+    (7) code_block -> LBRACKET empty RBRACKET .
+
+    RBRACKET        reduce using rule 7 (code_block -> LBRACKET empty RBRACKET .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for RBRACKET in state 7 resolved as shift
+WARNING: shift/reduce conflict for PRT in state 7 resolved as shift
+WARNING: shift/reduce conflict for FUNCTION in state 7 resolved as shift
+WARNING: shift/reduce conflict for RBRACKET in state 11 resolved as shift
